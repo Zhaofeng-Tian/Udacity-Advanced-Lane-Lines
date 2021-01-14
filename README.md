@@ -80,4 +80,4 @@ By using a pipeline to process video frame-by-frame, the final results are shown
 
 |Project Video|Challenge Video|
 |-------------|-------------|
-|![Final Result Gif](./images/highway-driving.gif)|![Challenge Video](./images/highway-driving2.gif)|
+|![Final Result Gif](./images/highway-driving.gif)|![Challenge GIf](./images/highway-driving2.gif)|
