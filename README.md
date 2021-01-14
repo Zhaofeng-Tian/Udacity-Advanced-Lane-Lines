@@ -48,13 +48,15 @@ To get undistorted images, 'cv2.undistort' is used, which will get arguments fro
 ### Step 4: Binary Thresholds
 In this step I attempted to convert the warped image to different color spaces and create binary thresholded images which highlight only the lane lines and ignore everything else. 
 I found that the following color channels and thresholds did a good job of identifying the lane lines in the provided test images:
-- The S Channel from the HLS color space, with a min threshold of 180 and a max threshold of 255, did a fairly good job of identifying both the white and yellow lane lines, but did not pick up 100% of the pixels in either one, and had a tendency to get distracted by shadows on the road.
-- The L Channel from the LUV color space, with a min threshold of 225 and a max threshold of 255, did an almost perfect job of picking up the white lane lines, but completely ignored the yellow lines.
-- The B channel from the Lab color space, with a min threshold of 155 and an upper threshold of 200, did a better job than the S channel in identifying the yellow lines, but completely ignored the white lines. 
+- The S Channel from the HLS color space, with a min threshold of 200 and a max threshold of 255, did a fairly good job of identifying both the white and yellow lane lines, but did not pick up 100% of the pixels in either one, and had a tendency to get distracted by shadows on the road.
+- The L Channel from the LUV color space, with a min threshold of 220 and a max threshold of 255, did an almost perfect job of picking up the white lane lines, but completely ignored the yellow lines.
+- The B channel from the Lab color space, with a min threshold of 160 and an upper threshold of 200, did a better job than the S channel in identifying the yellow lines, but completely ignored the white lines. 
 
 I chose to create a combined binary threshold based on the three above mentioned binary thresholds, to create one combination thresholded image which does a great job of highlighting almost all of the white and yellow lane lines.
 
-![Binary Thresholds](./images/thresholds1.png)
+![Binary Thresholds](./images/slb2.png)
+
+![Binary Thresholds2](./images/thresholds1.png)
 
 ### Steps 5: Polynomial Fitting & Curvature Calculation:
 At this point I was able to use the combined binary image to isolate only the pixels belonging to lane lines. The next step was to fit a polynomial to each lane line, which was done by:
