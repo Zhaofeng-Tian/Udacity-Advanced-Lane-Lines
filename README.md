@@ -1,7 +1,7 @@
 # Advanced Lane Finding
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-![Marked lane](./images/highway-driving.gif)
+![Marked lane](./images/Highway-driving.gif)
 
 In this project, the goal is to write a software pipeline to identify the lane boundaries in a video, but the main output or product we want you to create is a detailed writeup of the project.  
 
@@ -29,21 +29,21 @@ In the first step, this study used the OpenCV functions `findChessboardCorners` 
 
 ![Corners Image](./images/corners.png)
 
-![Corners Image](./images/corners1.png)
+![Corners1 Image](./images/corners1.png)
 
 Next, the locations of the chessboard corners were used as input to the OpenCV function `calibrateCamera` to compute the camera calibration matrix and distortion coefficients. 
 
 ### Step 2: Undistorted Images
 In the second step, the camera calibration matrix and distortion coefficients were used with the OpenCV function `undistort` to remove distortion from highway driving images.
 
-![Undistorted Image](./images/undistored1.png)
+![Undistorted Image](./images/Undistored1.png)
 
 Notice that if you compare the two images, especially around the edges, there are obvious differences between the original and undistorted image, indicating that distortion has been removed from the original image.
 
 ### Step 3: Perspective Transform
 To get undistorted images, 'cv2.undistort' is used, which will get arguments from cv2.calibrateCamera like the distortion coefficient, the camera matrix to return a undistorted image.The goal of this step is to transform the undistorted image to a "birds eye view" of the road which focuses only on the lane lines and displays them in such a way that they appear to be relatively parallel to eachother (as opposed to the converging lines you would normally see). To achieve the perspective transformation I first applied the OpenCV functions `getPerspectiveTransform` and `warpPerspective` which take a matrix of four source points on the undistorted image and remaps them to four destination points on the warped image. The source and destination points were selected manually by visualizing the locations of the lane lines on a series of test images.
 
-![Birds Eye Image](./images/warped.png)
+![Birds Eye Image](./images/birds5.png)
 
 ### Step 4: Binary Thresholds
 In this step I attempted to convert the warped image to different color spaces and create binary thresholded images which highlight only the lane lines and ignore everything else. 
@@ -80,4 +80,4 @@ By using a pipeline to process video frame-by-frame, the final results are shown
 
 |Project Video|Challenge Video|
 |-------------|-------------|
-|![Final Result Gif](./images/highway-driving.gif)|![Challenge GIf](./images/highway-driving2.gif)|
+|![Final Result Gif](./images/Highway-driving.gif)|![Challenge GIf](./images/Highway-driving2.gif)|
