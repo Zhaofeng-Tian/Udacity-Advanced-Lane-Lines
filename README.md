@@ -64,6 +64,18 @@ At this point I was able to use the combined binary image to isolate only the pi
 - Identifying all non zero pixels around histogram peaks using the numpy function `numpy.nonzero()`.
 - Fitting a polynomial to each lane using the numpy function `numpy.polyfit()`.
 
+to caculate the curvature, the function of radius of curvature is used:
+```
+ym_per_pix = 5./720 # meters per pixel in y dimension
+xm_per_pix = 3.7/700 # meteres per pixel in x dimension
+left_fit_cr = np.polyfit(lefty*ym_per_pix, leftx*xm_per_pix, 2)
+right_fit_cr = np.polyfit(righty*ym_per_pix, rightx*xm_per_pix, 2)
+left_curverad = ((1 + (2*left_fit_cr[0]*np.max(lefty) + left_fit_cr[1])**2)**1.5) \
+                             /np.absolute(2*left_fit_cr[0])
+right_curverad = ((1 + (2*right_fit_cr[0]*np.max(lefty) + right_fit_cr[1])**2)**1.5) \
+                                /np.absolute(2*right_fit_cr[0])
+```
+*Source:* http://www.intmath.com/applications-differentiation/8-radius-curvature.php
 After fitting the polynomials I was able to calculate the position of the vehicle with respect to center with the following calculations:
 - Calculated the average of the x intercepts from each of the two polynomials `position = (rightx_int+leftx_int)/2`
 - Calculated the distance from center by taking the absolute value of the vehicle position minus the halfway point along the horizontal axis `distance_from_center = abs(image_width/2 - position)`
@@ -83,3 +95,6 @@ By using a pipeline to process video frame-by-frame, the final results are shown
 |Project Video|Challenge Video|
 |-------------|-------------|
 |![Final Result Gif](./images/Highway-driving.gif)|![Challenge GIf](./images/Highway-driving2.gif)|
+
+## Discusstion
+After building several functions, the pipeline could work well on project video and challenge video. Also, I modified the funtion of curvature measruement that I consumed the distance of y dimonsion is 5m which made the curvature value better. But when use this pipeline on the video where there are more shadows and larger curvature, the result might not be as good as normal situations. Of courese, in the binary part, s channel, l channel and b channel are selected to adress the issue, and work well, however, the s channel bring some noise points in the picture that has more shadows. Due to the noise points, when calculate the peak, if the lower part has no line (white line), the noise points are recodnized as peak, that could cause some distortion in a few frames. Maybe using l channel and b channel only could be a better method.
